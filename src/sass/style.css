@@ -1,0 +1,115 @@
+html, body, .layout {
+    height: 100%;
+}
+.layout {
+    padding: 36px 27px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: hsla(0,0%,100%,.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,.38);
+}
+
+.no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+table thead tr th.sortable {
+    cursor: pointer;
+    position: relative;
+    padding-right: 12px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+table thead tr th.sortable i {
+    color: #C5C5C5;
+    position: absolute;
+    top: 12px;
+    right: 2px
+}
+
+table thead tr th.sortable i.sorted {
+    color: black
+}
+
+.s-ta_c {
+    text-align: center;
+}
+
+.s-sortable {
+    cursor: pointer;
+    font-size: 12px !important;
+    /*
+    position: relative;
+    padding-right: 12px;*/
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.s-sort-element {
+    position: absolute;
+    right: 1px;
+    color: #bfbfbf !important;
+    top: 3px;
+}
+
+.s-sort-element-wrapper {
+    position: relative;
+    padding-right: 10px;
+}
+
+.table-condensed > thead > tr > th,
+.table-condensed > tbody > tr > th,
+.table-condensed > tfoot > tr > th,
+.table-condensed > thead > tr > td,
+.table-condensed > tbody > tr > td,
+.table-condensed > tfoot > tr > td {
+    padding: 5px;
+}
+
+.s-mb_10 {
+    margin-bottom: 20px;
+}
+
+.s-mb_0i {
+    margin-bottom: 0 !important;
+}
+
+.portlet-scrollable {
+    max-height: calc(100vh - 135px);
+    overflow: auto;
+}
+
+.s-display_n {
+    display: none;
+}
+
+.s-display_tri {
+    display: table-row !important;
+}
+
+.btn input {
+    display: none;
+}

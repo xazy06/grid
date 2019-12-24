@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>table</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="./src/sass/style.css">
+</head>
+<body>
+<div id="app" class="layout">
+  <div class="container-fluid">
+    <div data-bind="with: table" class="row">
+      <div data-bind="css: {'col-md-8': $root.selectedItemExist, 'col-md-12': !$root.selectedItemExist()}">
+        <h3>Грид</h3>
+        <div class="b-dt">
+          <div class="s-mb_10">
+            <form class="form-inline">
+              <div class="form-group">
+                <input data-bind="textInput: filter" type="text" class="form-control" placeholder="поиск..."/>
+              </div>
+              <div class="form-group mx-sm-3">
+                <select class="custom-select" data-bind="options: [50,100,200,500,1000], value: perPage"></select>
+              </div>
+              <div class="form-group mx-sm-3">
+                <div class="btn-group" data-toggle="buttons">
+                  <label data-bind="css: {active: $root.fetchingType() === 'low'}" class="btn btn-primary">
+                    <input data-bind="checked: $root.fetchingType" type="radio" name="data" id="low" value="low"
+                           autocomplete="off" checked> мало данных
+                  </label>
+                  <label data-bind="css: {active: $root.fetchingType() === 'high'}" class="btn btn-primary">
+                    <input data-bind="checked: $root.fetchingType" type="radio" name="data" id="high" value="high"
+                           autocomplete="off"> побольше)
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <nav data-bind="visible: pages() > 1">
+                  <ul class="pagination s-mb_0i">
+                    <li class="page-item" data-bind="css: leftPagerClass, click: prev">
+                      <a class="page-link" href="#"><i class="fa fa-angle-left"></i></a>
+                    </li>
+                    <li class="page-item" data-bind="visible:currentPage() > 1">
+                      <a class="page-link" href="#" data-bind="click:gotoPage(1)">
+                        <i class="fa fa-angle-double-left"></i>
+                      </a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#" data-bind="text: currentPage"></a>
+                    </li>
+                    <li class="page-item" data-bind="visible:currentPage() < pages()">
+                      <a class="page-link" href="#" data-bind="click:gotoPage(pages())">
+                        <i class="fa fa-angle-double-right"></i>
+                      </a>
+                    </li>
+                    <li class="page-item" data-bind="css: rightPagerClass, click: next">
+                      <a class="page-link" href="#"><i class="fa fa-angle-right"></i></a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+              <div class="form-group mx-sm-3">
+                <label data-bind="text: recordsLabel"></label>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div>
+          <div class="portlet-scrollable">
+            <table class="table table-condensed table-hover s-mb_0i">
+              <thead>
+              <tr>
+                <th class="s-sortable" data-bind="click: toggleSorting('id')">
+                  <div class="s-sort-element-wrapper">Id<i class="s-sort-element"
+                                                           data-bind="css: sortClass('id')"></i></div>
+                </th>
+                <th class="s-sortable" data-bind="click: toggleSorting('firstName')">
+                  <div class="s-sort-element-wrapper">FirstName<i class="s-sort-element"
+                                                                  data-bind="css: sortClass('firstName')"></i></div>
+                </th>
+                <th class="s-sortable" data-bind="click: toggleSorting('lastName')">
+                  <div class="s-sort-element-wrapper">LastName<i class="s-sort-element"
+                                                                 data-bind="css: sortClass('lastName')"></i></div>
+                </th>
+                <th class="s-sortable" data-bind="click: toggleSorting('email')">
+                  <div class="s-sort-element-wrapper">Email<i class="s-sort-element"
+                                                              data-bind="css: sortClass('email')"></i></div>
+                </th>
+                <th class="s-sortable" data-bind="click: toggleSorting('phone')">
+                  <div class="s-sort-element-wrapper">Phone<i class="s-sort-element"
+                                                              data-bind="css: sortClass('phone')"></i></div>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr data-bind="visible: !showLoading() && showNoData">
+                <td colspan="5" class="s-ta_c">
+                  Нет данных.
+                </td>
+              </tr>
+              <tr data-bind="visible: showLoading">
+                <td colspan="5" class="s-ta_c">
+                  <i data-bind="css: {'icon-spin': showLoading}"
+                     class="fa fa-spin font-blue fa-circle-o-notch s-fix-loader"></i>
+                  Загрузка данных...
+                </td>
+              </tr>
+              <!-- ko foreach: {data: pagedRows, as: '$row'}  -->
+              <tr data-bind="click: $root.actions.edit.bind($row)">
+                <td data-bind="text: $row.id"></td>
+                <td data-bind="text: $row.firstName"></td>
+                <td data-bind="text: $row.lastName"></td>
+                <td data-bind="text: $row.email"></td>
+                <td data-bind="text: $row.phone"></td>
+              </tr>
+              <!-- /ko -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div data-bind="css: {'col-md-4': $root.selectedItemExist, 's-display_n': !$root.selectedItemExist()}">
+        <h3>Паспорт сущности</h3>
+        <div data-bind="if: $root.selectedItemExist">
+          <div class="form-group row">
+            <div class="col-4">Выбран пользователь</div>
+            <div class="col-8">
+              <strong data-bind="text: ($root.selectedItem.firstName() + '' + $root.selectedItem.lastName())"></strong>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">Описание</div>
+            <div class="col-8">
+              <div data-bind="text: $root.selectedItem.description"></div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">Адрес проживания</div>
+            <div class="col-8">
+              <strong data-bind="text: $root.selectedItem.adress().streetAddress"></strong>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">Город</div>
+            <div class="col-8">
+              <strong data-bind="text: $root.selectedItem.adress().city"></strong>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">Провинция/штат</div>
+            <div class="col-8">
+              <strong data-bind="text: $root.selectedItem.adress().state"></strong>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">Индекс</div>
+            <div class="col-8">
+              <strong data-bind="text: $root.selectedItem.adress().zip"></strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+<script src="./src/plugins/knockout.mapping.js"></script>
+<script src="./src/assets/table/index.js"></script>
+<script src="./src/app.js"></script>
+</body>
+</html>
